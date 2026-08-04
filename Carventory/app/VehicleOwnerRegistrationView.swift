@@ -174,7 +174,7 @@ struct VehicleOwnerRegistrationView: View {
                 )
                 .font(
                     .system(
-                        size: isPad ? 56 : 48
+                        size: isPad ? 30 : 30
                     )
                 )
                 .foregroundStyle(.tint)
@@ -182,7 +182,7 @@ struct VehicleOwnerRegistrationView: View {
                 Text("Create Your Account")
                     .font(
                         .system(
-                            size: isPad ? 36 : 32,
+                            size: isPad ? 30 : 30,
                             weight: .bold
                         )
                     )

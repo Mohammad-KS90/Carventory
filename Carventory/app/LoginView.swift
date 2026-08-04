@@ -48,18 +48,19 @@ struct LoginView: View {
                                 .font(
                                     .system(
                                         size: geometry.size.width >= 768
-                                        ? 56
-                                        : 48
+                                        ? 30
+                                        : 30
                                     )
                                 )
                                 .foregroundStyle(.tint)
 
                             Text("Welcome Back")
                                 .font(
+                                    
                                     .system(
                                         size: geometry.size.width >= 768
-                                        ? 36
-                                        : 32,
+                                        ? 30
+                                        : 30,
                                         weight: .bold
                                     )
                                 )
