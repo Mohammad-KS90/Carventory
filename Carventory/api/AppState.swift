@@ -27,5 +27,12 @@ final class AppState: ObservableObject {
         guard let roles = user?.role else { return nil }
         return DomainResolver.resolve(roles: [roles])
     }
+    
+    func logout() {
+        user = nil
+        vehicle = nil
+        isLoggedIn = false
+        // clear token/session...
+    }
 
 }

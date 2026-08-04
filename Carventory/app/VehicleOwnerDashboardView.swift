@@ -447,9 +447,6 @@ struct VehicleOwnerDashboardView: View {
     // MARK: - Body
     var body: some View {
 
-        let vehicle = appState.vehicle!
-        let user = appState.user!
-
         ScrollView {
             VStack(spacing: 24) {
 
@@ -465,43 +462,43 @@ struct VehicleOwnerDashboardView: View {
 
                     infoRow(
                         title: "Full Name",
-                        value: user.fullName ?? "-",
+                        value: appState.user?.fullName ?? "-",
                         icon: "person.fill"
                     )
 
                     infoRow(
                         title: "Username",
-                        value: user.username ?? "-",
+                        value: appState.user?.username ?? "-",
                         icon: "at"
                     )
 
                     infoRow(
                         title: "Email",
-                        value: user.email ?? "-",
+                        value: appState.user?.email ?? "-",
                         icon: "envelope.fill"
                     )
 
                     infoRow(
                         title: "Phone",
-                        value: user.phone ?? "-",
+                        value: appState.user?.phone ?? "-",
                         icon: "phone.fill"
                     )
 
                     infoRow(
                         title: "Role",
-                        value: user.role?.rawValue ?? "-",
+                        value: appState.user?.role?.rawValue ?? "-",
                         icon: "person.badge.key.fill"
                     )
 
                     infoRow(
                         title: "Status",
-                        value: user.status ?? "-",
+                        value: appState.user?.status ?? "-",
                         icon: "checkmark.circle.fill"
                     )
 
                     infoRow(
                         title: "Account Type",
-                        value: "\(user.accountType)",
+                        value: "\(appState.user?.accountType ?? .company)",
                         icon: "building.2.fill"
                     )
                 }
@@ -514,7 +511,7 @@ struct VehicleOwnerDashboardView: View {
                 ) {
 
                     // Vehicle summary
-                    vehicleSummary(vehicle: vehicle)
+                    vehicleSummary()
 
                     Divider()
                         .padding(.vertical, 4)
@@ -522,50 +519,50 @@ struct VehicleOwnerDashboardView: View {
                     // Vehicle information
                     infoRow(
                         title: "Make",
-                        value: vehicle.make,
+                        value: appState.vehicle?.make ?? "",
                         icon: "car.fill"
                     )
 
                     infoRow(
                         title: "Model",
-                        value: vehicle.model,
+                        value: appState.vehicle?.model ?? "",
                         icon: "rectangle.fill"
                     )
 
                     infoRow(
                         title: "Year",
-                        value: String(vehicle.year),
+                        value: "\(appState.vehicle?.year)",
                         icon: "calendar"
                     )
 
                     infoRow(
                         title: "Type",
-                        value: vehicle.vehicleType,
+                        value: appState.vehicle?.vehicleType ?? "",
                         icon: "car.side.fill"
                     )
 
                     infoRow(
                         title: "Fuel Type",
-                        value: vehicle.fuelType,
+                        value: appState.vehicle?.fuelType ?? "",
                         icon: "fuelpump.fill"
                     )
 
                     infoRow(
                         title: "Engine",
-                        value: vehicle.engine,
+                        value: appState.vehicle?.engine ?? "",
                         icon: "engine.combustion.fill"
                     )
 
                     infoRow(
                         title: "Transmission",
-                        value: vehicle.transmission.isEmpty
+                        value: ((appState.vehicle?.transmission.isEmpty) != nil)
                             ? "-"
-                            : vehicle.transmission,
+                        : appState.vehicle?.transmission ?? "",
                         icon: "gearshape.fill"
                     )
 
                     // VIN
-                    vinView(vin: vehicle.vin)
+                    vinView(vin: appState.vehicle?.vin ?? "")
                 }
 
                 // MARK: - Suggestions
@@ -587,8 +584,8 @@ struct VehicleOwnerDashboardView: View {
 
     // MARK: - Dashboard Header
     private var dashboardHeader: some View {
-
-        VStack(spacing: 8) {
+        
+        VStack(spacing: 12) {
 
             Image(systemName: "car.circle.fill")
                 .font(.system(size: 48))
@@ -601,6 +598,35 @@ struct VehicleOwnerDashboardView: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
+
+            // MARK: - Logout
+            Button {
+                logout()
+            } label: {
+                HStack(spacing: 8) {
+                    Image(systemName: "rectangle.portrait.and.arrow.right")
+                        .font(.system(size: 15, weight: .semibold))
+
+                    Text("Logout")
+                        .font(.subheadline.weight(.semibold))
+                }
+                .foregroundStyle(.red)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 10)
+                .background(
+                    Color.red.opacity(0.10),
+                    in: Capsule()
+                )
+                .overlay {
+                    Capsule()
+                        .strokeBorder(
+                            Color.red.opacity(0.20),
+                            lineWidth: 1
+                        )
+                }
+            }
+            .buttonStyle(.plain)
+            .padding(.top, 4)
         }
         .frame(maxWidth: .infinity)
         .padding(.top, 20)
@@ -706,11 +732,11 @@ struct VehicleOwnerDashboardView: View {
 
     // MARK: - Vehicle Summary
     @ViewBuilder
-    private func vehicleSummary(vehicle: Vehicle) -> some View {
+    private func vehicleSummary() -> some View {
 
         HStack(spacing: 16) {
 
-            Image(systemName: vehicleIcon(for: vehicle.vehicleType))
+            Image(systemName: vehicleIcon(for: appState.vehicle?.vehicleType ?? ""))
                 .font(.system(size: 28, weight: .semibold))
                 .foregroundStyle(.white)
                 .frame(width: 64, height: 64)
@@ -730,10 +756,10 @@ struct VehicleOwnerDashboardView: View {
 
             VStack(alignment: .leading, spacing: 5) {
 
-                Text("\(vehicle.year) \(vehicle.make)")
+                Text("\(appState.vehicle?.year ?? 0) \(appState.vehicle?.make ?? "")")
                     .font(.title3.weight(.bold))
 
-                Text(vehicle.model)
+                Text(appState.vehicle?.model ?? "")
                     .font(.headline)
                     .foregroundStyle(.secondary)
 
@@ -741,7 +767,7 @@ struct VehicleOwnerDashboardView: View {
 
                     Image(systemName: "fuelpump.fill")
 
-                    Text(vehicle.fuelType)
+                    Text(appState.vehicle?.fuelType ?? "")
                 }
                 .font(.caption.weight(.medium))
                 .foregroundStyle(.secondary)
@@ -1060,7 +1086,7 @@ struct VehicleOwnerDashboardView: View {
 
         // Age-based personalization
         var ageText = ""
-        if let dobString = user.metadata?["dob"] as? String,
+        if let dobString = appState.user?.metadata?["dob"] as? String,
            let dob = ISO8601DateFormatter().date(from: dobString) {
             let age = Calendar.current.dateComponents([.year], from: dob, to: Date()).year ?? 0
             ageText = "\(age)-year-old"
@@ -1070,9 +1096,9 @@ struct VehicleOwnerDashboardView: View {
         var vehicleText = ""
         if let vehicle = appState.vehicle,
            ["car_service", "car_parts", "car_repair", "maintenance"].contains(category.key) {
-            let make = vehicle.make
-            let model = vehicle.model
-            let year = vehicle.year != 0 ? String(vehicle.year) : ""
+            let make = appState.vehicle?.make
+            let model = appState.vehicle?.model
+            let year = appState.vehicle?.year != 0 ? String(appState.vehicle?.year ?? 0) : ""
             vehicleText = "\(make) \(model) \(year)"
         }
 
@@ -1112,7 +1138,7 @@ struct VehicleOwnerDashboardView: View {
 
         // Age-based personalization
         var ageText = ""
-        if let dobString = user.metadata?["dob"] as? String,
+        if let dobString = appState.user?.metadata?["dob"] as? String,
            let dob = ISO8601DateFormatter().date(from: dobString) {
             let age = Calendar.current.dateComponents([.year], from: dob, to: Date()).year ?? 0
             ageText = "\(age)-year-old"
@@ -1122,9 +1148,9 @@ struct VehicleOwnerDashboardView: View {
         var vehicleText = ""
         if let vehicle = appState.vehicle,
            ["car_service", "car_parts", "car_repair", "maintenance"].contains(category.key) {
-            let make = vehicle.make
-            let model = vehicle.model
-            let year = vehicle.year != 0 ? String(vehicle.year) : ""
+            let make = appState.vehicle?.make
+            let model = appState.vehicle?.model
+            let year = appState.vehicle?.year != 0 ? String(appState.vehicle?.year ?? 0) : ""
             vehicleText = "\(make) \(model) \(year)"
         }
 
@@ -1191,6 +1217,12 @@ struct VehicleOwnerDashboardView: View {
         if let category = allCategories.first(where: { $0.key == "car_service" }) {
             openSuggestion(category: category)
         }
+    }
+    
+    // MARK: - Logout
+    private func logout() {
+        
+        appState.logout()
     }
 
 }
