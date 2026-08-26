@@ -274,50 +274,6 @@
             endingLineNumber = "32"
             landmarkName = "getMyVehicles(token:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "E4AFB519-E447-48C7-80AB-F22CCF17CF72 - f685dc7370400d72"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for static Carventory.VehicleAPI.getMyVehicles(token: Swift.String) async throws -&gt; Swift.Array&lt;Carventory.Vehicle&gt;"
-                  moduleName = "Carventory.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mohammadsuliman/Documents/MyCompany/CarenvntoryApps/Mobile/Carventory/Carventory/api/service/VehicleAPI.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "32"
-                  endingLineNumber = "32">
-               </Location>
-               <Location
-                  uuid = "E4AFB519-E447-48C7-80AB-F22CCF17CF72 - 398ae4e6041e47d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(2) await resume partial function for static Carventory.VehicleAPI.getMyVehicles(token: Swift.String) async throws -&gt; Swift.Array&lt;Carventory.Vehicle&gt;"
-                  moduleName = "Carventory.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mohammadsuliman/Documents/MyCompany/CarenvntoryApps/Mobile/Carventory/Carventory/api/service/VehicleAPI.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "32"
-                  endingLineNumber = "32">
-               </Location>
-               <Location
-                  uuid = "E4AFB519-E447-48C7-80AB-F22CCF17CF72 - ac8feff095aac970"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for static Carventory.VehicleAPI.getMyVehicles(token: Swift.String) async throws -&gt; Swift.Array&lt;Carventory.Vehicle&gt;"
-                  moduleName = "Carventory.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mohammadsuliman/Documents/MyCompany/CarenvntoryApps/Mobile/Carventory/Carventory/api/service/VehicleAPI.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "32"
-                  endingLineNumber = "32">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
