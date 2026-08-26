@@ -264,7 +264,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "E4AFB519-E447-48C7-80AB-F22CCF17CF72"
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Carventory/api/service/VehicleAPI.swift"
@@ -274,6 +274,50 @@
             endingLineNumber = "32"
             landmarkName = "getMyVehicles(token:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "E4AFB519-E447-48C7-80AB-F22CCF17CF72 - f685dc7370400d72"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for static Carventory.VehicleAPI.getMyVehicles(token: Swift.String) async throws -&gt; Swift.Array&lt;Carventory.Vehicle&gt;"
+                  moduleName = "Carventory.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mohammadsuliman/Documents/MyCompany/CarenvntoryApps/Mobile/Carventory/Carventory/api/service/VehicleAPI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32">
+               </Location>
+               <Location
+                  uuid = "E4AFB519-E447-48C7-80AB-F22CCF17CF72 - 398ae4e6041e47d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for static Carventory.VehicleAPI.getMyVehicles(token: Swift.String) async throws -&gt; Swift.Array&lt;Carventory.Vehicle&gt;"
+                  moduleName = "Carventory.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mohammadsuliman/Documents/MyCompany/CarenvntoryApps/Mobile/Carventory/Carventory/api/service/VehicleAPI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32">
+               </Location>
+               <Location
+                  uuid = "E4AFB519-E447-48C7-80AB-F22CCF17CF72 - ac8feff095aac970"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for static Carventory.VehicleAPI.getMyVehicles(token: Swift.String) async throws -&gt; Swift.Array&lt;Carventory.Vehicle&gt;"
+                  moduleName = "Carventory.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mohammadsuliman/Documents/MyCompany/CarenvntoryApps/Mobile/Carventory/Carventory/api/service/VehicleAPI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -424,7 +468,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "AD66D510-95A8-4BDB-B5EE-D1F1A7CB0008"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Carventory/api/service/VehicleAPI.swift"
@@ -440,7 +484,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "FDF6E17C-7E5E-4356-A89C-62D1AC859793"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Carventory/api/service/VehicleAPI.swift"
@@ -487,17 +531,49 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "162E7134-0C56-4197-831B-21D5FC9649E5"
+            uuid = "5D7B6227-6D53-4024-9047-E2FAFE8318B3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Carventory/api/service/VehicleAPI.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "assignVehicle(vin:countryCode:userId:token:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "31639901-CF36-46CD-BBCB-D920BE5BF364"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Carventory/api/service/VehicleAPI.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
+            landmarkName = "assignVehicle(vin:countryCode:userId:token:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C38F0E2B-6E70-4A2E-B687-555003A3302E"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Carventory/app/VehicleOwnerDashboardView.swift"
+            filePath = "Carventory/app/LoginView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "450"
-            endingLineNumber = "450"
-            landmarkName = "body"
-            landmarkType = "24">
+            startingLineNumber = "260"
+            endingLineNumber = "260"
+            landmarkName = "login()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
