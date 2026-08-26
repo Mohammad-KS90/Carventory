@@ -160,15 +160,15 @@ enum UserRole: String, Codable {
 //# Warehouse roles inverntory management
 //VehicleOwner = "VehicleOwner" # will create by own
 enum AppDomain {
-    case owner, vehicleOwner, serviceCenter, pos, support, driver, system
+    case admin, owner, vehicleOwner, serviceCenter, pos, support, driver, system
 }
 
 
 enum DomainResolver {
     static func resolve(roles: [UserRole]) -> AppDomain {
         if roles.contains(.vehicleOwner) { return .vehicleOwner }
-        if roles.contains(.owner) { return .vehicleOwner }
-        if roles.contains(.admin) { return .vehicleOwner }
+        if roles.contains(.owner) { return .owner }
+        if roles.contains(.admin) { return .admin }
         if roles.contains(where: { $0.rawValue.hasPrefix("ServiceCenter") }) { return .serviceCenter }
         if roles.contains(where: { $0.rawValue.hasPrefix("POS") }) { return .pos }
         if roles.contains(where: { $0.rawValue.hasPrefix("SystemSupport") }) { return .support }

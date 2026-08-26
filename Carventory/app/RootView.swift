@@ -17,7 +17,10 @@ struct RootView: View {
             } else {
                 switch appState.domain {
                 case .owner:
-                    VehicleOwnerRoot()
+                    Text("Owner App")
+//                    VehicleOwnerRoot()
+                case .admin:
+                    Text("Admin App")
                 case .vehicleOwner:
                     VehicleOwnerRoot()
                 case .serviceCenter:

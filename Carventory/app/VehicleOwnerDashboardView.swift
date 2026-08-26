@@ -444,110 +444,641 @@ struct VehicleOwnerDashboardView: View {
     // MARK: - Language selection (default to English)
     private var languageCode: String { appState.languageCode }
 
+    // MARK: - Body
     var body: some View {
-        let vehicle = appState.vehicle!
-        let user = appState.user!
 
         ScrollView {
-            VStack(spacing: 30) {
-                // MARK: - Title
-                Text("Dashboard")
-                    .font(.system(size: 36, weight: .bold))
-                    .multilineTextAlignment(.center)
-                    .padding(.top, 20)
+            VStack(spacing: 24) {
 
-                // MARK: - User Info Card
-                infoCard(title: "My Info") {
-                    infoRow(title: "Full Name", value: user.fullName ?? "-")
-                    infoRow(title: "Username", value: user.username ?? "u")
-                    infoRow(title: "Email", value: user.email ?? "e")
-                    infoRow(title: "Phone", value: user.phone ?? "-")
-                    infoRow(title: "Role", value: "\(user.role?.rawValue)")
-                    infoRow(title: "Status", value: user.status ?? "-")
-                    infoRow(title: "Account Type", value: "\(user.accountType)")
+                // MARK: - Dashboard Header
+                dashboardHeader
+
+                // MARK: - User Info
+                infoCard(
+                    title: "My Information",
+                    icon: "person.crop.circle.fill",
+                    tint: .blue
+                ) {
+
+                    infoRow(
+                        title: "Full Name",
+                        value: appState.user?.fullName ?? "-",
+                        icon: "person.fill"
+                    )
+
+                    infoRow(
+                        title: "Username",
+                        value: appState.user?.username ?? "-",
+                        icon: "at"
+                    )
+
+                    infoRow(
+                        title: "Email",
+                        value: appState.user?.email ?? "-",
+                        icon: "envelope.fill"
+                    )
+
+                    infoRow(
+                        title: "Phone",
+                        value: appState.user?.phone ?? "-",
+                        icon: "phone.fill"
+                    )
+
+                    infoRow(
+                        title: "Role",
+                        value: appState.user?.role?.rawValue ?? "-",
+                        icon: "person.badge.key.fill"
+                    )
+
+                    infoRow(
+                        title: "Status",
+                        value: appState.user?.status ?? "-",
+                        icon: "checkmark.circle.fill"
+                    )
+
+                    infoRow(
+                        title: "Account Type",
+                        value: "\(appState.user?.accountType ?? .company)",
+                        icon: "building.2.fill"
+                    )
                 }
 
-                // MARK: - Vehicle Info Card
-                infoCard(title: "My Vehicle") {
-                    infoRow(title: "Make", value: vehicle.make)
-                    infoRow(title: "Model", value: vehicle.model)
-                    infoRow(title: "Year", value: String(vehicle.year))
-                    infoRow(title: "VIN", value: vehicle.vin)
-                    infoRow(title: "Type", value: vehicle.vehicleType)
-                    infoRow(title: "Fuel Type", value: vehicle.fuelType)
-                    infoRow(title: "Engine", value: vehicle.engine)
-                    infoRow(title: "Transmission", value: vehicle.transmission.isEmpty ? "-" : vehicle.transmission)
+                // MARK: - Vehicle
+                infoCard(
+                    title: "My Vehicle",
+                    icon: "car.fill",
+                    tint: .indigo
+                ) {
+
+                    // Vehicle summary
+                    vehicleSummary()
+
+                    Divider()
+                        .padding(.vertical, 4)
+
+                    // Vehicle information
+                    infoRow(
+                        title: "Make",
+                        value: appState.vehicle?.make ?? "",
+                        icon: "car.fill"
+                    )
+
+                    infoRow(
+                        title: "Model",
+                        value: appState.vehicle?.model ?? "",
+                        icon: "rectangle.fill"
+                    )
+
+                    infoRow(
+                        title: "Year",
+                        value: "\(appState.vehicle?.year)",
+                        icon: "calendar"
+                    )
+
+                    infoRow(
+                        title: "Type",
+                        value: appState.vehicle?.vehicleType ?? "",
+                        icon: "car.side.fill"
+                    )
+
+                    infoRow(
+                        title: "Fuel Type",
+                        value: appState.vehicle?.fuelType ?? "",
+                        icon: "fuelpump.fill"
+                    )
+
+                    infoRow(
+                        title: "Engine",
+                        value: appState.vehicle?.engine ?? "",
+                        icon: "engine.combustion.fill"
+                    )
+
+                    infoRow(
+                        title: "Transmission",
+                        value: ((appState.vehicle?.transmission.isEmpty) != nil)
+                            ? "-"
+                        : appState.vehicle?.transmission ?? "",
+                        icon: "gearshape.fill"
+                    )
+
+                    // VIN
+                    vinView(vin: appState.vehicle?.vin ?? "")
                 }
 
-                // MARK: - Suggestions Grid
-                VStack(spacing: 20) {
-                    Text("Suggestions")
-                        .font(.title)
-                        .bold()
+                // MARK: - Suggestions
+                suggestionsSection
 
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 150), spacing: 20)], spacing: 20) {
-                        ForEach(allCategories, id: \.key) { category in
-                            Button(action: {
-                                openSuggestion2(category: category)
-                            }) {
-                                Text(category.displayName[languageCode] ?? category.displayName["en"]!)
-                                    .frame(maxWidth: .infinity, minHeight: 50)
-                                    .background(Color.blue)
-                                    .foregroundColor(.white)
-                                    .cornerRadius(12)
-                            }
-                        }
-                    }
-                    .padding(.horizontal, UIDevice.current.userInterfaceIdiom == .pad ? 100 : 20)
-                }
+                // MARK: - Nearby Service
+                nearbyServiceButton
 
-                // MARK: - Find Nearby Service Button
-                Button(action: { openNearbyService() }) {
-                    Text("Find Nearby Service")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .cornerRadius(12)
-                        .padding(.horizontal, UIDevice.current.userInterfaceIdiom == .pad ? 100 : 20)
-                }
-
-                Spacer()
+                Spacer(minLength: 20)
             }
+            .frame(maxWidth: 900)
             .frame(maxWidth: .infinity)
+            .padding(.horizontal, 20)
+            .padding(.bottom, 30)
         }
+        .scrollIndicators(.hidden)
+        .background(Color(.systemGroupedBackground))
+    }
+
+    // MARK: - Dashboard Header
+    private var dashboardHeader: some View {
+        
+        VStack(spacing: 12) {
+
+            Image(systemName: "car.circle.fill")
+                .font(.system(size: 48))
+                .foregroundStyle(.blue)
+
+            Text("Dashboard")
+                .font(.system(size: 34, weight: .bold))
+
+            Text("Manage your vehicle and discover nearby services")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+
+            // MARK: - Logout
+            Button {
+                logout()
+            } label: {
+                HStack(spacing: 8) {
+                    Image(systemName: "rectangle.portrait.and.arrow.right")
+                        .font(.system(size: 15, weight: .semibold))
+
+                    Text("Logout")
+                        .font(.subheadline.weight(.semibold))
+                }
+                .foregroundStyle(.red)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 10)
+                .background(
+                    Color.red.opacity(0.10),
+                    in: Capsule()
+                )
+                .overlay {
+                    Capsule()
+                        .strokeBorder(
+                            Color.red.opacity(0.20),
+                            lineWidth: 1
+                        )
+                }
+            }
+            .buttonStyle(.plain)
+            .padding(.top, 4)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.top, 20)
+        .padding(.bottom, 8)
     }
 
     // MARK: - Reusable Card
     @ViewBuilder
-    private func infoCard<Content: View>(title: String, @ViewBuilder content: () -> Content) -> some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text(title)
-                .font(.title2)
-                .bold()
-                .padding(.bottom, 5)
+    private func infoCard<Content: View>(
+        title: String,
+        icon: String,
+        tint: Color,
+        @ViewBuilder content: () -> Content
+    ) -> some View {
+
+        VStack(alignment: .leading, spacing: 18) {
+
+            // Card Header
+            HStack(spacing: 12) {
+
+                Image(systemName: icon)
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundStyle(tint)
+                    .frame(width: 42, height: 42)
+                    .background(
+                        tint.opacity(0.12),
+                        in: RoundedRectangle(
+                            cornerRadius: 12,
+                            style: .continuous
+                        )
+                    )
+
+                Text(title)
+                    .font(.title3.weight(.bold))
+
+                Spacer()
+            }
+
+            Divider()
+
             content()
         }
-        .padding()
-        .background(Color(.systemGray6))
-        .cornerRadius(15)
-        .shadow(radius: 5)
-        .padding(.horizontal, UIDevice.current.userInterfaceIdiom == .pad ? 100 : 20)
+        .padding(20)
+        .frame(maxWidth: .infinity)
+        .background(
+            RoundedRectangle(
+                cornerRadius: 24,
+                style: .continuous
+            )
+            .fill(.regularMaterial)
+        )
+        .overlay {
+            RoundedRectangle(
+                cornerRadius: 24,
+                style: .continuous
+            )
+            .strokeBorder(
+                Color.primary.opacity(0.07),
+                lineWidth: 1
+            )
+        }
+        .shadow(
+            color: Color.black.opacity(0.07),
+            radius: 16,
+            x: 0,
+            y: 8
+        )
     }
 
     // MARK: - Reusable Row
     @ViewBuilder
-    private func infoRow(title: String, value: String) -> some View {
-        HStack {
-            Text(title + ":")
-                .bold()
-            Spacer()
-            Text(value.isEmpty ? "-" : value)
-                .multilineTextAlignment(.trailing)
+    private func infoRow(
+        title: String,
+        value: String,
+        icon: String
+    ) -> some View {
+
+        HStack(alignment: .center, spacing: 12) {
+
+            Image(systemName: icon)
+                .font(.system(size: 14, weight: .medium))
+                .foregroundStyle(.secondary)
+                .frame(width: 24)
+
+            VStack(alignment: .leading, spacing: 3) {
+
+                Text(title)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+
+                Text(value.isEmpty ? "-" : value)
+                    .font(.body.weight(.medium))
+                    .foregroundStyle(.primary)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+                    .textSelection(.enabled)
+            }
+
+            Spacer(minLength: 10)
         }
-        .font(.system(size: UIDevice.current.userInterfaceIdiom == .pad ? 22 : 18))
+        .padding(.vertical, 5)
     }
+
+    // MARK: - Vehicle Summary
+    @ViewBuilder
+    private func vehicleSummary() -> some View {
+
+        HStack(spacing: 16) {
+
+            Image(systemName: vehicleIcon(for: appState.vehicle?.vehicleType ?? ""))
+                .font(.system(size: 28, weight: .semibold))
+                .foregroundStyle(.white)
+                .frame(width: 64, height: 64)
+                .background(
+                    LinearGradient(
+                        colors: [.blue, .indigo],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .clipShape(
+                    RoundedRectangle(
+                        cornerRadius: 18,
+                        style: .continuous
+                    )
+                )
+
+            VStack(alignment: .leading, spacing: 5) {
+
+                Text("\(appState.vehicle?.year ?? 0) \(appState.vehicle?.make ?? "")")
+                    .font(.title3.weight(.bold))
+
+                Text(appState.vehicle?.model ?? "")
+                    .font(.headline)
+                    .foregroundStyle(.secondary)
+
+                HStack(spacing: 6) {
+
+                    Image(systemName: "fuelpump.fill")
+
+                    Text(appState.vehicle?.fuelType ?? "")
+                }
+                .font(.caption.weight(.medium))
+                .foregroundStyle(.secondary)
+            }
+
+            Spacer()
+        }
+    }
+
+    // MARK: - Vehicle Icon
+    private func vehicleIcon(for type: String) -> String {
+
+        switch type.lowercased() {
+
+        case "truck":
+            return "truck.box.fill"
+
+        case "motorcycle":
+            return "motorcycle.fill"
+
+        case "bus":
+            return "bus.fill"
+
+        case "van":
+            return "car.side.fill"
+
+        default:
+            return "car.fill"
+        }
+    }
+
+    // MARK: - VIN
+    @ViewBuilder
+    private func vinView(vin: String) -> some View{
+
+        VStack(alignment: .leading, spacing: 8) {
+
+            HStack(spacing: 8) {
+
+                Image(systemName: "qrcode")
+                    .foregroundStyle(.blue)
+
+                Text("Vehicle Identification Number")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.secondary)
+
+                Spacer()
+            }
+
+            HStack {
+
+                Text(vin.isEmpty ? "-" : vin)
+                    .font(.system(.body, design: .monospaced))
+                    .fontWeight(.semibold)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                    .textSelection(.enabled)
+
+                Spacer()
+            }
+        }
+        .padding(14)
+        .background(
+            Color.blue.opacity(0.07),
+            in: RoundedRectangle(
+                cornerRadius: 14,
+                style: .continuous
+            )
+        )
+    }
+
+    // MARK: - Suggestions
+    private var suggestionsSection: some View {
+
+        VStack(alignment: .leading, spacing: 16) {
+
+            HStack {
+
+                Image(systemName: "sparkles")
+                    .foregroundStyle(.orange)
+
+                Text("Suggestions")
+                    .font(.title2.weight(.bold))
+
+                Spacer()
+            }
+
+            LazyVGrid(
+                columns: [
+                    GridItem(
+                        .adaptive(minimum: 145),
+                        spacing: 14
+                    )
+                ],
+                spacing: 14
+            ) {
+
+                ForEach(allCategories, id: \.key) { category in
+
+                    Button {
+                        openSuggestion2(category: category)
+                    } label: {
+
+                        VStack(alignment: .leading, spacing: 12) {
+
+                            Image(systemName: suggestionIcon(for: category))
+                                .font(
+                                    .system(
+                                        size: 22,
+                                        weight: .semibold
+                                    )
+                                )
+
+                            Spacer(minLength: 4)
+
+                            Text(
+                                category.displayName[languageCode]
+                                ?? category.displayName["en"]
+                                ?? category.key
+                            )
+                            .font(.headline)
+                            .multilineTextAlignment(.leading)
+                            .lineLimit(2)
+
+                            HStack(spacing: 4) {
+
+                                Text("Explore")
+
+                                Image(systemName: "arrow.right")
+                            }
+                            .font(.caption.weight(.semibold))
+                            .foregroundStyle(.secondary)
+                        }
+                        .foregroundStyle(.primary)
+                        .frame(
+                            maxWidth: .infinity,
+                            minHeight: 125,
+                            alignment: .topLeading
+                        )
+                        .padding(16)
+                        .background(.regularMaterial)
+                        .clipShape(
+                            RoundedRectangle(
+                                cornerRadius: 20,
+                                style: .continuous
+                            )
+                        )
+                        .overlay {
+                            RoundedRectangle(
+                                cornerRadius: 20,
+                                style: .continuous
+                            )
+                            .strokeBorder(
+                                Color.primary.opacity(0.07),
+                                lineWidth: 1
+                            )
+                        }
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+        }
+    }
+
+    // MARK: - Suggestion Icon
+    private func suggestionIcon(
+        for category: PlaceCategory
+    ) -> String {
+
+        switch category.key {
+
+        case "car_service":
+            return "wrench.and.screwdriver.fill"
+
+        case "car_parts":
+            return "shippingbox.fill"
+
+        case "gas_station":
+            return "fuelpump.fill"
+
+        case "restaurant":
+            return "fork.knife"
+
+        case "cafe":
+            return "cup.and.saucer.fill"
+
+        case "bakery":
+            return "birthday.cake.fill"
+
+        case "hotel":
+            return "bed.double.fill"
+
+        case "hostel":
+            return "person.2.fill"
+
+        case "resort":
+            return "sun.max.fill"
+
+        case "cinema":
+            return "film.fill"
+
+        case "amusement_park":
+            return "figure.2.and.child.holdinghands"
+
+        case "zoo":
+            return "pawprint.fill"
+
+        case "museum":
+            return "building.columns.fill"
+
+        case "park":
+            return "tree.fill"
+
+        case "beach":
+            return "beach.umbrella.fill"
+
+        case "hiking":
+            return "figure.hiking"
+
+        case "gym":
+            return "dumbbell.fill"
+
+        case "swimming_pool":
+            return "figure.pool.swim"
+
+        case "playground":
+            return "figure.play"
+
+        case "children_museum":
+            return "figure.2.and.child.holdinghands"
+
+        case "shopping_mall":
+            return "building.2.fill"
+
+        case "supermarket":
+            return "cart.fill"
+
+        case "clothing_store":
+            return "tshirt.fill"
+
+        case "hospital":
+            return "cross.case.fill"
+
+        case "pharmacy":
+            return "cross.fill"
+
+        default:
+            return "mappin.and.ellipse"
+        }
+    }
+
+    // MARK: - Nearby Service
+    private var nearbyServiceButton: some View {
+
+        Button {
+            openNearbyService()
+        } label: {
+
+            HStack(spacing: 14) {
+
+                Image(systemName: "location.magnifyingglass")
+                    .font(.system(size: 22, weight: .semibold))
+                    .frame(width: 44, height: 44)
+                    .background(
+                        Color.white.opacity(0.16),
+                        in: RoundedRectangle(
+                            cornerRadius: 12,
+                            style: .continuous
+                        )
+                    )
+
+                VStack(alignment: .leading, spacing: 3) {
+
+                    Text("Find Nearby Service")
+                        .font(.headline)
+
+                    Text("Find car services around you")
+                        .font(.caption)
+                        .opacity(0.85)
+                }
+
+                Spacer()
+
+                Image(systemName: "arrow.right")
+                    .font(.headline)
+            }
+            .foregroundStyle(.white)
+            .padding(16)
+            .background {
+                LinearGradient(
+                    colors: [.blue, .indigo],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            }
+            .clipShape(
+                RoundedRectangle(
+                    cornerRadius: 20,
+                    style: .continuous
+                )
+            )
+            .shadow(
+                color: Color.blue.opacity(0.25),
+                radius: 12,
+                x: 0,
+                y: 7
+            )
+        }
+        .buttonStyle(.plain)
+    }
+    
 
     // MARK: - Open Suggestion in Maps
     private func openSuggestion(category: PlaceCategory, mapProvider: String = "google") {
@@ -555,7 +1086,7 @@ struct VehicleOwnerDashboardView: View {
 
         // Age-based personalization
         var ageText = ""
-        if let dobString = user.metadata?["dob"] as? String,
+        if let dobString = appState.user?.metadata?["dob"] as? String,
            let dob = ISO8601DateFormatter().date(from: dobString) {
             let age = Calendar.current.dateComponents([.year], from: dob, to: Date()).year ?? 0
             ageText = "\(age)-year-old"
@@ -565,9 +1096,9 @@ struct VehicleOwnerDashboardView: View {
         var vehicleText = ""
         if let vehicle = appState.vehicle,
            ["car_service", "car_parts", "car_repair", "maintenance"].contains(category.key) {
-            let make = vehicle.make
-            let model = vehicle.model
-            let year = vehicle.year != 0 ? String(vehicle.year) : ""
+            let make = appState.vehicle?.make
+            let model = appState.vehicle?.model
+            let year = appState.vehicle?.year != 0 ? String(appState.vehicle?.year ?? 0) : ""
             vehicleText = "\(make) \(model) \(year)"
         }
 
@@ -607,7 +1138,7 @@ struct VehicleOwnerDashboardView: View {
 
         // Age-based personalization
         var ageText = ""
-        if let dobString = user.metadata?["dob"] as? String,
+        if let dobString = appState.user?.metadata?["dob"] as? String,
            let dob = ISO8601DateFormatter().date(from: dobString) {
             let age = Calendar.current.dateComponents([.year], from: dob, to: Date()).year ?? 0
             ageText = "\(age)-year-old"
@@ -617,9 +1148,9 @@ struct VehicleOwnerDashboardView: View {
         var vehicleText = ""
         if let vehicle = appState.vehicle,
            ["car_service", "car_parts", "car_repair", "maintenance"].contains(category.key) {
-            let make = vehicle.make
-            let model = vehicle.model
-            let year = vehicle.year != 0 ? String(vehicle.year) : ""
+            let make = appState.vehicle?.make
+            let model = appState.vehicle?.model
+            let year = appState.vehicle?.year != 0 ? String(appState.vehicle?.year ?? 0) : ""
             vehicleText = "\(make) \(model) \(year)"
         }
 
@@ -686,6 +1217,12 @@ struct VehicleOwnerDashboardView: View {
         if let category = allCategories.first(where: { $0.key == "car_service" }) {
             openSuggestion(category: category)
         }
+    }
+    
+    // MARK: - Logout
+    private func logout() {
+        
+        appState.logout()
     }
 
 }
