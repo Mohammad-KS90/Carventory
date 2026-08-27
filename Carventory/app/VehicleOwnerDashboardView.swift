@@ -1096,9 +1096,9 @@ struct VehicleOwnerDashboardView: View {
         var vehicleText = ""
         if let vehicle = appState.vehicle,
            ["car_service", "car_parts", "car_repair", "maintenance"].contains(category.key) {
-            let make = appState.vehicle?.make
-            let model = appState.vehicle?.model
-            let year = appState.vehicle?.year != 0 ? String(appState.vehicle?.year ?? 0) : ""
+            let make = vehicle.make
+            let model = vehicle.model
+            let year = vehicle.year != 0 ? String(vehicle.year) : ""
             vehicleText = "\(make) \(model) \(year)"
         }
 
@@ -1148,9 +1148,9 @@ struct VehicleOwnerDashboardView: View {
         var vehicleText = ""
         if let vehicle = appState.vehicle,
            ["car_service", "car_parts", "car_repair", "maintenance"].contains(category.key) {
-            let make = appState.vehicle?.make
-            let model = appState.vehicle?.model
-            let year = appState.vehicle?.year != 0 ? String(appState.vehicle?.year ?? 0) : ""
+            let make = vehicle.make
+            let model = vehicle.model
+            let year = vehicle.year != 0 ? String(vehicle.year) : ""
             vehicleText = "\(make) \(model) \(year)"
         }
 

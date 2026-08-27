@@ -110,6 +110,57 @@ enum UserRole: String, Codable {
     case truckDriver = "TruckDriver"
 }
 
+//class UserRole(str, Enum):
+//    # top level roles
+//    Owner = "Owner" # will create the first user as admin, SystemCOO, SystemCFO, SystemCTO
+//    Admin = "Admin" # will create System admin
+//
+//    # C level roles
+//    SystemCOO = "SystemCOO"
+//    SystemCFO = "SystemCFO"
+//    SystemCTO = "SystemCTO"
+//    # System roles
+//    SystemAdmin = "SystemAdmin" # will create SystemDeveloper, SystemQa, SystemProduct, SystemUIUX, SystemSales, SystemMarketing, SystemHR, SystemFinance, SystemSupport, SystemSupportB
+//    BusinessAdmin = "BusinessAdmin"
+//    
+//    SystemDeveloper = "SystemDeveloper"
+//    SystemQa = "SystemQa"
+//    SystemProduct = "SystemProduct"
+//    SystemInstall = "SystemInstall" # wil see only installation related tasks
+//    SystemUIUX = "SystemUIUX"
+//    SystemSales = "SystemSales" # will request deal,
+//    SystemMarketing = "SystemMarketing"
+//    SystemHR = "SystemHR"
+//    SystemFinance = "SystemFinance" # if done deal, will create OwnerPOS, TruckDriver, ServiceCenterOwner,
+//    
+//    SystemSupport = "SystemSupport"
+//    SystemSupportBBP = "SystemSupportBBP" # support POS
+//    SystemSupportBBS = "SystemSupportBBS" # support ServiceCenter
+//    SystemSupportBBT = "SystemSupportBBT" # support TruckDriver
+//    SystemSupportBBV = "SystemSupportBBV" # support VehicleOwner
+//
+//    SystemSupportC = "SystemSupportC"
+//
+//    # POS roles for auto part retail store management
+//    POSOwner = "POSOwner" # will create AdminPOS,
+//    POSAdmin = "POSAdmin" # will create SalesmanPOS, CashierPOS, InventoryManagerPOS, StorekeeperPOS, AccountantPOS, SupportPOS
+//    POSSalesman = "POSSalesman"
+//    POSCashier = "POSCashier"
+//    POSInventoryManager = "POSInventoryManager"
+//    POSStorekeeper = "POSStorekeeper"
+//    POSAccountant = "POSAccountant"
+//
+//    # service center roles
+//    ServiceCenterOwner = "ServiceCenterOwner" # will create ServiceCenterAdmin, ServiceCenterStaff
+//    ServiceCenterAdmin = "ServiceCenterAdmin"
+//    ServiceCenterStaff = "ServiceCenterStaff"
+//
+//    # truck driver role
+//    TruckDriver = "TruckDriver"
+//
+//    # Warehouse roles inverntory management
+//    VehicleOwner = "VehicleOwner" # will create by own
+
 
 //Owner = "Owner" # will create the first user as admin, SystemCOO, SystemCFO, SystemCTO
 //Admin = "Admin" # will create System admin

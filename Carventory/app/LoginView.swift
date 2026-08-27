@@ -12,7 +12,7 @@ struct LoginView: View {
 
     @EnvironmentObject var appState: AppState
 
-    @State private var email = "mohmmadOwner@gmail.com"
+    @State private var email = "vo@gmail.com"
     @State private var password = "Mohmmadkhaleel@100"
 
     @State private var isLoading = false
@@ -256,8 +256,8 @@ struct LoginView: View {
                 let user = try await VehicleOwnerAPI.getMe(token: token)
                 appState.user = user
 //
-                let vehicles = try await VehicleAPI.getMyVehicles(token: token)
-                appState.vehicle = vehicles.first
+                let vehicles = try await VehicleAPI.getMyVehicles(token: token).first
+                appState.vehicle = vehicles
                 appState.languageCode = Locale.current.language.languageCode?.identifier ?? "en"
             
             } catch let e {

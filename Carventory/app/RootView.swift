@@ -17,24 +17,30 @@ struct RootView: View {
             } else {
                 switch appState.domain {
                 case .owner:
-                    Text("Owner App")
-//                    VehicleOwnerRoot()
+//                    Text("Owner App")
+                    VehicleOwnerRoot()
                 case .admin:
                     Text("Admin App")
                 case .vehicleOwner:
                     VehicleOwnerRoot()
                 case .serviceCenter:
                     Text("Service Center App")
+                    VehicleOwnerRoot()
                 case .pos:
                     Text("POS App")
+                    VehicleOwnerRoot()
                 case .support:
                     Text("Support App")
+                    VehicleOwnerRoot()
                 case .driver:
                     Text("Driver App")
+                    VehicleOwnerRoot()
                 case .system:
                     Text("System App")
+                    VehicleOwnerRoot()
                 case .none:
                     Text("No domain assigned")
+                    VehicleOwnerRoot()
                 }
             }
         }.padding(.all, 0)
