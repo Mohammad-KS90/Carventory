@@ -1,0 +1,21 @@
+[
+  {
+    "prefix": "KMHC85LC",
+    "countryCode": "KR",
+    "make": "Hyundai",
+    "model": "Ioniq",
+    "vehicleType": "Passenger Car",
+    "modelYear": null,
+    "engine": "1.6L 4-Cylinder",
+    "fuelType": "Gasoline",
+    "transmission": null,
+    "requiresManualEntry": false,
+    "rawData": {
+      "VINPrefix": "KMHC85LC",
+      "Make": "Hyundai",
+      "Model": "Ioniq",
+      "Engine": "1.6L 4-Cylinder",
+      "FuelType": "Gasoline"
+    }
+  }
+]
