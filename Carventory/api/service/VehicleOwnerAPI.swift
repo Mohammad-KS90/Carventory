@@ -12,20 +12,26 @@ struct VehicleOwnerCreateRequest: Codable {
     let email: String
     let password: String
     let phone: String?
-    let fullName: String?
-    let countryCode: String
-    let vehicleId: String?
-    let role: String = "VehicleOwner"
-    let accountType: String = "individual"
+    let full_name: String?
+    let country_code: String
+    let vehicle_id: String?
+    var role: String = "VehicleOwner"
+    var account_type: String = "individual"
+    let status: String?
+    let company_id: String?
+    let branch_id: String?
+    
 }
 
 enum VehicleOwnerAPI {
     static func createUser(payload: VehicleOwnerCreateRequest) async throws -> User {
         let body = try JSONEncoder().encode(payload)
-        return try await APIClient.request(
+        let headers:[String:String] = ["Content-Type" : "application/json", "Accept": "application/json"]
+            return try await APIClient.request(
             path: "/IAM/vehicle-owner",
             method: "POST",
-            body: body
+            body: body,
+            headers: headers
         )
     }
 

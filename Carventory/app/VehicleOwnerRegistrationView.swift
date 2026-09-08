@@ -12,7 +12,7 @@ struct VehicleOwnerRegistrationView: View {
 
     @EnvironmentObject var appState: AppState
 
-    @State private var vin = ""
+    @State private var vin = "KMHC051HFKU048972"
     @State private var isLoading = false
     @State private var error: String?
     @State private var showingVINScanner = false
@@ -583,41 +583,108 @@ struct VehicleOwnerRegistrationView: View {
 
     // MARK: - Register
 
+//    private func registerUser() {
+//        Task {
+//            isLoading = true
+//            error = nil
+//            do {
+//                let payload = VehicleOwnerCreateRequest(username: appState.tempUsername,
+//                                                        email: appState.tempEmail,
+//                                                        password: appState.tempPassword,
+//                                                        phone: appState.tempPhone,
+//                                                        full_name: appState.tempFullName,
+//                                                        country_code: "JO",
+//                                                        vehicle_id: "",
+//                                                        status: "active",
+//                                                        company_id: "000000000000000000000001",
+//                                                        branch_id: "12234")
+//
+//                _ = try await VehicleOwnerAPI.createUser(payload: payload)
+//
+//                let token = try await AuthAPI.login(email: appState.tempEmail, password: appState.tempPassword)
+//                appState.authToken = token
+//                appState.isLoggedIn = true
+//
+//                let user = try await VehicleOwnerAPI.getMe(token: token)
+//                appState.user = user
+//                
+//                let vehicle = try await VehicleAPI.assignVehicle(vin: vin,
+//                                                                 countryCode: Locale.current.region?.identifier ?? "JO",
+//                                                                 userId: appState.user!.id, token: appState.authToken ?? "")
+//                appState.vehicle = vehicle
+//
+//
+//            } catch let e {
+//                error = e.localizedDescription
+//            }
+//            isLoading = false
+//        }
+//    }
+    
     private func registerUser() {
-        Task {
+        Task { @MainActor in
             isLoading = true
             error = nil
-            do {
 
-                let payload = VehicleOwnerCreateRequest(
-                    username: appState.tempUsername,
-                    email: appState.tempEmail,
-                    password: appState.tempPassword,
-                    phone: appState.tempPhone,
-                    fullName: appState.tempFullName,
-                    countryCode: "JO",
-                    vehicleId: nil
+            do {
+                // 1. CREATE USER
+                let user = try await VehicleOwnerAPI.createUser(
+                    payload: VehicleOwnerCreateRequest(
+                        username: appState.tempUsername,
+                        email: appState.tempEmail,
+                        password: appState.tempPassword,
+                        phone: appState.tempPhone,
+                        full_name: appState.tempFullName,
+                        country_code: "JO",
+                        vehicle_id: "",
+                        status: "active",
+                        company_id: "000000000000000000000001",
+                        branch_id: "12234"
+                    )
                 )
 
-                _ = try await VehicleOwnerAPI.createUser(payload: payload)
+                print("✅ User created: \(user.id)")
+                
+                sleep(2)
+                // 2. LOGIN
+                let token = try await AuthAPI.login(
+                    email: appState.tempEmail,
+                    password: appState.tempPassword
+                )
 
-                let token = try await AuthAPI.login(email: appState.tempEmail, password: appState.tempPassword)
+                print("✅ Login successful")
+
+                // 3. ASSIGN VEHICLE
+                let vehicle = try await VehicleAPI.assignVehicle(
+                    vin: vin,
+                    countryCode: "JO",
+                    userId: user.id,
+                    token: token
+                )
+
+                print("✅ Vehicle assigned: \(vehicle.id)")
+
+                // 4. GET CURRENT USER
+                let currentUser = try await VehicleOwnerAPI.getMe(
+                    token: token
+                )
+
+                // 5. UPDATE APP STATE ONLY AFTER EVERYTHING SUCCEEDS
                 appState.authToken = token
+                appState.user = currentUser
+                appState.vehicle = vehicle
                 appState.isLoggedIn = true
 
-                let user = try await VehicleOwnerAPI.getMe(token: token)
-                appState.user = user
-                
-                let vehicle = try await VehicleAPI.assignVehicle(vin: vin,
-                                                                 countryCode: Locale.current.region?.identifier ?? "JO",
-                                                                 userId: appState.user!.id, token: appState.authToken ?? "")
-                appState.vehicle = vehicle
+                print("🎉 Registration completed")
 
-
-            } catch let e {
-                error = e.localizedDescription
+            } catch {
+                print("❌ Registration failed:", error)
+                self.error = error.localizedDescription
             }
+
             isLoading = false
         }
     }
+    
+
 }

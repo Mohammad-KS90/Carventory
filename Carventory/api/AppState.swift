@@ -15,12 +15,12 @@ final class AppState: ObservableObject {
     @Published var vehicle: Vehicle?
 
     // Temporary registration info
-    @Published var tempUsername: String = ""
-    @Published var tempEmail: String = ""
-    @Published var tempPassword: String = ""
-    @Published var tempFullName: String = ""
-    @Published var tempPhone: String = ""
-    @Published var languageCode: String = ""
+    @Published var tempUsername: String = "mohammad"
+    @Published var tempEmail: String = "mohammad@gmail.com"
+    @Published var tempPassword: String = "xikqet-xEzmy0-seffiq"
+    @Published var tempFullName: String = "mohammad mohammad"
+    @Published var tempPhone: String = "+962788949581"
+    @Published var languageCode: String = "JO"
     
     
     var domain: AppDomain? {

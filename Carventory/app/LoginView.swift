@@ -12,7 +12,7 @@ struct LoginView: View {
 
     @EnvironmentObject var appState: AppState
 
-    @State private var email = "mohmmadOwner@gmail.com"
+    @State private var email = "vo@gmail.com"
     @State private var password = "Mohmmadkhaleel@100"
 
     @State private var isLoading = false

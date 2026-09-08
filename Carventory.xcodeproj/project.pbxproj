@@ -15,17 +15,32 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				README.md,
 			);
 			target = 2A4FE6462F0D764F0050E2D8 /* Carventory */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		2A6ECE3030506BCE00627EDF /* Exceptions for "Carventory" folder in "Compile Sources" phase from "Carventory" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 2A4FE6432F0D764F0050E2D8 /* Sources */;
+			membershipExceptions = (
+				README.md,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		2A4FE6492F0D764F0050E2D8 /* Carventory */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				2A4FE6762F0D85510050E2D8 /* Exceptions for "Carventory" folder in "Carventory" target */,
+				2A6ECE3030506BCE00627EDF /* Exceptions for "Carventory" folder in "Compile Sources" phase from "Carventory" target */,
 			);
+			explicitFileTypes = {
+				README.md = text;
+			};
 			path = Carventory;
 			sourceTree = "<group>";
 		};
