@@ -486,7 +486,7 @@ struct VehicleOwnerDashboardView: View {
 
                     infoRow(
                         title: "Role",
-                        value: appState.user?.role?.rawValue ?? "-",
+                        value: appState.user?.role.rawValue ?? "-",
                         icon: "person.badge.key.fill"
                     )
 
@@ -531,7 +531,7 @@ struct VehicleOwnerDashboardView: View {
 
                     infoRow(
                         title: "Year",
-                        value: "\(appState.vehicle?.year)",
+                        value: "\(appState.vehicle?.year, default: "-")",
                         icon: "calendar"
                     )
 
@@ -1085,12 +1085,12 @@ struct VehicleOwnerDashboardView: View {
         guard let user = appState.user else { return }
 
         // Age-based personalization
-        var ageText = ""
-        if let dobString = appState.user?.metadata?["dob"] as? String,
-           let dob = ISO8601DateFormatter().date(from: dobString) {
-            let age = Calendar.current.dateComponents([.year], from: dob, to: Date()).year ?? 0
-            ageText = "\(age)-year-old"
-        }
+        var ageText = "37"
+//        if let dobString = appState.user?.metadata["dob"] as? String,
+//           let dob = ISO8601DateFormatter().date(from: dobString) {
+//            let age = Calendar.current.dateComponents([.year], from: dob, to: Date()).year ?? 0
+//            ageText = "\(age)-year-old"
+//        }
 
         // Vehicle info (only for vehicle services)
         var vehicleText = ""
@@ -1137,12 +1137,12 @@ struct VehicleOwnerDashboardView: View {
         guard let user = appState.user else { return }
 
         // Age-based personalization
-        var ageText = ""
-        if let dobString = appState.user?.metadata?["dob"] as? String,
-           let dob = ISO8601DateFormatter().date(from: dobString) {
-            let age = Calendar.current.dateComponents([.year], from: dob, to: Date()).year ?? 0
-            ageText = "\(age)-year-old"
-        }
+        var ageText = "37"
+//        if let dobString = appState.user?.metadata?["dob"] as? String,
+//           let dob = ISO8601DateFormatter().date(from: dobString) {
+//            let age = Calendar.current.dateComponents([.year], from: dob, to: Date()).year ?? 0
+//            ageText = "\(age)-year-old"
+//        }
 
         // Vehicle info (only for vehicle-related categories)
         var vehicleText = ""

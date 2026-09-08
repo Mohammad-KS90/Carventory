@@ -41,6 +41,10 @@ class APIClient {
         📤 REQUEST
         → \(method) \(url.absoluteString)
         """)
+        if let body = request.httpBody,
+           let bodyString = String(data: body, encoding: .utf8) {
+            print("📦 ACTUAL REQUEST BODY:", bodyString)
+        }
 
         let (data, response) = try await URLSession.shared.data(for: request)
 
@@ -66,13 +70,46 @@ class APIClient {
         }
 
         do {
-            let jsondecoder = try JSONDecoder.apiDecoder.decode(
+            let decoded = try JSONDecoder.apiDecoder.decode(
                 T.self,
                 from: data
             )
-            return jsondecoder
+
+            return decoded
+
         } catch {
-            throw APIError.decodingError
+            print("❌ DECODING ERROR")
+            print("Type:", T.self)
+            print("Error:", error)
+
+            if let decodingError = error as? DecodingError {
+                switch decodingError {
+
+                case .keyNotFound(let key, let context):
+                    print("❌ Key not found:", key.stringValue)
+                    print("Coding path:", context.codingPath)
+
+                case .typeMismatch(let type, let context):
+                    print("❌ Type mismatch:", type)
+                    print("Coding path:", context.codingPath)
+                    print("Description:", context.debugDescription)
+
+                case .valueNotFound(let type, let context):
+                    print("❌ Value not found:", type)
+                    print("Coding path:", context.codingPath)
+                    print("Description:", context.debugDescription)
+
+                case .dataCorrupted(let context):
+                    print("❌ Data corrupted")
+                    print("Coding path:", context.codingPath)
+                    print("Description:", context.debugDescription)
+
+                @unknown default:
+                    print("❌ Unknown decoding error")
+                }
+            }
+
+            throw error
         }
     }
 }
@@ -89,16 +126,16 @@ extension JSONDecoder {
             let container = try decoder.singleValueContainer()
             let value = try container.decode(String.self)
 
-            let formatter = DateFormatter()
-            formatter.locale = Locale(identifier: "en_US_POSIX")
-            formatter.calendar = Calendar(identifier: .gregorian)
-            formatter.timeZone = TimeZone(secondsFromGMT: 0)
-            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
+            let formatter = ISO8601DateFormatter()
+            formatter.formatOptions = [
+                .withInternetDateTime,
+                .withFractionalSeconds
+            ]
 
             guard let date = formatter.date(from: value) else {
                 throw DecodingError.dataCorruptedError(
                     in: container,
-                    debugDescription: "Invalid date: \(value)"
+                    debugDescription: "Invalid ISO8601 date: \(value)"
                 )
             }
 
